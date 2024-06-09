@@ -1,7 +1,6 @@
-package concurrencia.ej10;
+package concurrencia.ej10Consola;
 
 import java.util.Random;
-import static concurrencia.ej10Consola.Main.actualizar;
 
 public class PinchaGlobos extends Thread{
 
@@ -18,11 +17,11 @@ public class PinchaGlobos extends Thread{
 	    @Override
 	    public void run() {
 	        try {
-	            while (!isInterrupted()) {
+	            while (true) {
 	                Thread.sleep((random.nextInt(10) + 1) * 1000);
 	                Globos globo = almacen.obtenerGloboHinchando();
 	                if (globo != null) {
-	                    actualizar("GLOBO " + globo.getId() + " PINCHADO POR " + nombre + "\n");
+	                    System.out.println("GLOBO " + globo.getId() + " PINCHADO POR " + nombre);
 	                    almacen.terminarHinchando(globo);
 	                    almacen.quitarGlobo(globo);
 	                }

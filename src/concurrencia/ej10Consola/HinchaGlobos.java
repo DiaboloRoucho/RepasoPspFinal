@@ -1,6 +1,4 @@
-package concurrencia.ej10;
-
-import static concurrencia.ej10Consola.Main.actualizar;
+package concurrencia.ej10Consola;
 
 public class HinchaGlobos extends Thread{
 
@@ -21,9 +19,9 @@ public class HinchaGlobos extends Thread{
 	                while (globo.getVolumen() < 5) {
 	                    Thread.sleep(1000);
 	                    globo.hinchar();
-	                    actualizar("GLOBO " + globo.getId() + " VOLUMEN " + globo.getVolumen() + "\n");
+	                    System.out.println("GLOBO " + globo.getId() + " VOLUMEN " + globo.getVolumen());
 	                    if (globo.getVolumen() >= 5) {
-	                        actualizar("GLOBO " + globo.getId() + " ESTALLA\n");
+	                        System.out.println("GLOBO " + globo.getId() + " ESTALLA");
 	                        break;
 	                    }
 	                }
