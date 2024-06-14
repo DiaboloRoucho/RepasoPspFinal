@@ -24,18 +24,18 @@ public class Ascensor extends Thread {
     public Ascensor(int id, Edificio edificio) {
         this.id = id;
         this.edificio = edificio;
-        this.plantaActual = 0; // Inicialmente en planta baja
+        this.plantaActual = 0;
         this.personas = new ArrayList<>();
         this.destinos = new ArrayList<>();
-        this.estado = Estado.PARADO; // Inicialmente parado
-    }
+        this.estado = Estado.PARADO;
+        }
 
     @Override
     public void run() {
         while (true) {
             try {
                 edificio.moverAscensor(this);
-                Thread.sleep(1000); // Simulación del tiempo de desplazamiento
+                Thread.sleep(1000); 
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -12,10 +12,10 @@ public class Persona extends Thread {
     public Persona(int n, Edificio edificio) {
         this.id = "P"+n;
         this.edificio = edificio;
-        this.plantaActual = random.nextInt(20); // Planta inicial aleatoria
+        this.plantaActual = random.nextInt(20);
         do {
-            this.plantaDestino = random.nextInt(20); // Planta destino aleatoria
-        } while (this.plantaActual == this.plantaDestino); // Asegurarse de que el destino sea diferente
+            this.plantaDestino = random.nextInt(20);
+        } while (this.plantaActual == this.plantaDestino);
     }
 
     public int getPlantaActual() {
@@ -36,10 +36,9 @@ public class Persona extends Thread {
     @Override
     public void run() {
         try {
-            // Solicitar ascensor
             edificio.solicitarAscensor(this);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+        	interrupt();
         }
     }
 }

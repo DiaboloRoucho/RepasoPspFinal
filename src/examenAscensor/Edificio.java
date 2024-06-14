@@ -9,7 +9,7 @@ import java.util.List;
 public class Edificio {
     private List<Ascensor> ascensores;
     private List<Persona> personas;
-    private final Object lock = new Object(); // Objeto de sincronización
+    private final Object lock = new Object();
 
     public Edificio() {
         ascensores = new ArrayList<>();
@@ -26,11 +26,9 @@ public class Edificio {
 
     public void solicitarAscensor(Persona persona) throws InterruptedException {
         synchronized (lock) {
-            // Seleccionar el ascensor más cercano o disponible
             Ascensor ascensorSeleccionado = seleccionarAscensor(persona.getPlantaActual());
-            // Agregar persona al ascensor seleccionado
             while (!ascensorSeleccionado.agregarPersona(persona)) {
-                lock.wait(); // Esperar hasta que haya espacio en el ascensor
+                lock.wait();
             }
             System.out.println(persona.getid() + " se ha subido al ascensor " + ascensorSeleccionado.getId());
             lock.notifyAll();
@@ -53,11 +51,9 @@ public class Edificio {
                     System.out.println("El ascensor "+ascensor.getId()+" esta parado");
                 }
 
-                // Mover ascensor a la siguiente planta destino
                 ascensor.setPlantaActual(siguienteDestino);
                 System.out.println("El ascensor "+ascensor.getId()+" ha llegado a la planta " + siguienteDestino);
 
-                // Dejar a las personas en su destino
                 List<Persona> personasParaDejar = new ArrayList<>();
                 for (Persona p : ascensor.getPersonas()) {
                     if (p.getPlantaDestino() == siguienteDestino) {
@@ -68,10 +64,9 @@ public class Edificio {
                     ascensor.removerPersona(p);
                     p.setPlantaActual(siguienteDestino);
                     System.out.println("Persona " + p.getId() + " ha llegado a su destino en planta " + siguienteDestino);
-                    p.interrupt(); // Finalizar ejecución del hilo persona
+                    p.interrupt(); 
                 }
 
-                // Determinar nuevo estado del ascensor
                 if (ascensor.getDestinos().isEmpty()) {
                     ascensor.setEstado(Ascensor.Estado.PARADO);
                     System.out.println("El ascensor "+ascensor.getId()+" esta parado");
@@ -88,9 +83,8 @@ public class Edificio {
     }
 
     private Ascensor seleccionarAscensor(int plantaActual) {
-        // Selección del ascensor más cercano o disponible
         Ascensor ascensorSeleccionado = null;
-        int distanciaMinima = Integer.MAX_VALUE;
+        int distanciaMinima =9000; //numero lo suficientemente alto
 
         for (Ascensor ascensor : ascensores) {
             int distancia = Math.abs(ascensor.getPlantaActual() - plantaActual);
